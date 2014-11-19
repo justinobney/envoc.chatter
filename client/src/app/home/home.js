@@ -9,6 +9,11 @@
     $stateProvider
       .state('root.home', {
         abstract: true,
+        resolve: {
+          currentUser: function(auth) {
+            return auth.$requireAuth();
+          }
+        },
         views: {
           '@': {
             templateUrl: 'src/app/home/home.tpl.html',
