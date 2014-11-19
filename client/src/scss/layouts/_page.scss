@@ -1,22 +1,12 @@
-$header-height: 60px;
-
 #main-nav {
   width: 250px;
   background: $teal;
 }
 
 #main-nav header {
-  background: $blue;
-  height: $header-height;
-  border-bottom: solid 1px $black;
-}
-
-#messages {
-
+  @include main-header($blue);
 }
 
 #messages header {
-  height: $header-height;
-  background: $gray;
-  border-bottom: solid 1px $black;
+  @include main-header($gray);
 }
