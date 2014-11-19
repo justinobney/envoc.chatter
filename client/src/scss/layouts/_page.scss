@@ -1,0 +1,22 @@
+$header-height: 60px;
+
+#main-nav {
+  width: 250px;
+  background: $teal;
+}
+
+#main-nav header {
+  background: $blue;
+  height: $header-height;
+  border-bottom: solid 1px $black;
+}
+
+#messages {
+
+}
+
+#messages header {
+  height: $header-height;
+  background: $gray;
+  border-bottom: solid 1px $black;
+}
