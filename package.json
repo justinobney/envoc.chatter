@@ -53,5 +53,8 @@
   },
   "scripts": {
     "test": "gulp travis"
+  },
+  "dependencies": {
+    "firebase": "^2.0.4"
   }
 }
