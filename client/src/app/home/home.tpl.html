@@ -4,11 +4,19 @@
       <user-profile></user-profile>
     </header>
     <section id="channel-list" flex>
-      Channels
+      <h1>Channels</h1>
       <ul>
         <li ng-repeat="channel in home.channels">
           <a ui-sref="root.home.channel({channel: channel.name})">
             #{{channel.name}}
+          </a>
+        </li>
+      </ul>
+      <h1>People</h1>
+      <ul>
+        <li ng-repeat="person in home.people">
+          <a ui-sref="root.home.dm({name: person.name})">
+            {{person.name}} <span ng-if="person.online">✔</span>
           </a>
         </li>
       </ul>
