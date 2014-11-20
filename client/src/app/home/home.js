@@ -27,8 +27,16 @@
    * @name  HomeCtrl
    * @description Controller
    */
-  function HomeCtrl() {
+  function HomeCtrl(channelService, fbutil) {
     var home = this;
+
+    home.channels = fbutil.syncObject('channels')
+    home.addChannel = addChannel;
+
+    function addChannel(){
+      channelService.addChannel(home.channelName);
+      home.channelName = '';
+    }
   }
 
   angular.module('home', [])

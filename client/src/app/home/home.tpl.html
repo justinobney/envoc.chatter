@@ -5,7 +5,17 @@
     </header>
     <section id="channel-list" flex>
       Channels
+      <ul>
+        <li ng-repeat="channel in home.channels">{{channel.name}}</li>
+      </ul>
     </section>
+    <footer>
+      <form ng-submit="home.addChannel()">
+        <input type="text"
+               ng-model="home.channelName"
+               placeholder="channel">
+      </form>
+    </footer>
   </nav>
   <div ui-view flex></div>
 </section>

@@ -46,6 +46,7 @@
       'common.filters.uppercase',
       'common.interceptors.http',
       'common.firebase',
+      'common.services',
       'templates'
     ])
     .config(config)
