@@ -2,9 +2,10 @@
   'use strict';
 
   function channelService($firebase, fbutil) {
+    /*jshint validthis:true */
     var self = this;
-    var messages = fbutil.ref('messages')
-    var channels = fbutil.ref('channels')
+    var messages = fbutil.ref('messages');
+    var channels = fbutil.ref('channels');
 
     self.addChannel = addChannel;
 

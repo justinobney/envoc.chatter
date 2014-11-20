@@ -25,10 +25,9 @@
   function SignupCtrl($state, userService) {
     var signup = this;
 
-    var base = 'joe_' + (+new Date());
-    signup.name = base;
-    signup.email = base + '@aol.com';
-    signup.password = 'password';
+    signup.name = ;
+    signup.email = '';
+    signup.password = '';
     signup.submit = onSubmit;
 
     function onSubmit() {

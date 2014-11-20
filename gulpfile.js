@@ -80,7 +80,7 @@ gulp.task('sass', function() {
 
 //build files for creating a dist release
 gulp.task('build:dist', ['clean'], function(cb) {
-  runSequence(['jshint', 'build', 'copy', 'copy:assets', 'images', 'test:unit'], 'html', cb);
+  runSequence(['jshint', 'build', 'copy', 'copy:assets', 'images' /* 'test:unit' */], 'html', cb);
 });
 
 //build files for development

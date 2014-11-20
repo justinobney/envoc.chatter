@@ -4,16 +4,15 @@
   var firebaseConfig = {
     url: 'https://envoc-chatterbox.firebaseio.com/',
     authOptions: {
-      remember: "sessionOnly"
+      remember: 'sessionOnly'
     }
-  }
+  };
 
   function firebaseRoot(firebaseConfig) {
     return new Firebase(firebaseConfig.url);
   }
 
   function fbutil($firebase, firebaseRoot) {
-    "use strict";
     return {
       syncObject: function(path, factoryConfig) {
         return syncData.apply(null, arguments).$asObject();
@@ -25,7 +24,7 @@
     };
 
     function pathRef(args) {
-      for (var i = 0; i < args.length; i++) {
+      for (var i = 0; i < args.length; i = i+1) {
         if (angular.isArray(args[i])) {
           args[i] = pathRef(args[i]);
         } else if (typeof args[i] !== 'string') {

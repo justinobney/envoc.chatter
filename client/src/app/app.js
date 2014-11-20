@@ -6,7 +6,7 @@
   });
 
   function config($stateProvider, $urlRouterProvider, $logProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/messages/boom-boom');
+    $urlRouterProvider.otherwise('/messages/general');
     // $logProvider.debugEnabled(true);
     $httpProvider.interceptors.push('httpInterceptor');
     $stateProvider

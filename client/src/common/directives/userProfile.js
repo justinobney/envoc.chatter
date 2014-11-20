@@ -8,7 +8,7 @@
                 '<br><button type="button" ng-click="logOut()">Log Out</button>',
       /*jshint unused:false*/
       link: function(scope, elm, attrs) {
-        scope.session = session
+        scope.session = session;
         scope.logOut = logOut;
 
         function logOut(){

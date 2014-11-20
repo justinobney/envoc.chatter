@@ -2,8 +2,7 @@
   'use strict';
 
   function auth($firebaseAuth, firebaseRoot) {
-    var auth = $firebaseAuth(firebaseRoot);
-    return auth;
+    return $firebaseAuth(firebaseRoot);
   }
 
   angular.module('common.firebase')
@@ -14,7 +13,7 @@
   'use strict';
 
   function userService($q, $firebase, firebaseRoot, auth) {
-    var svc = {}
+    var svc = {};
     svc.createUser = createUser;
 
     return svc;
@@ -29,15 +28,16 @@
           switch (err.code) {
             case 'EMAIL_TAKEN':
               // The new user account cannot be created because the email is already in use.
-              debugger;
+              break;
             case 'INVALID_EMAIL':
               // The specified email is not a valid email.
-              debugger;
+              break;
             default:
-              return $.reject(err.code)
+              return $q.reject(err.code);
           }
+          return $q.reject(err.code);
         }
-        return createProfile(profileData)
+        return createProfile(profileData);
       }
     }
 
@@ -50,7 +50,7 @@
         var dfd = $q.defer();
 
         var ref = firebaseRoot
-          .child("profiles")
+          .child('profiles')
           .child(auth.uid);
 
         ref.set(profileData, onProfileCreated);

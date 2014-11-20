@@ -22,11 +22,11 @@
    * @name  LoginCtrl
    * @description Controller
    */
-  function LoginCtrl($state, auth, firebaseConfig) {
+  function LoginCtrl($state, auth) {
     var login = this;
     login.submit = onSubmit;
 
-    login.email = 'jobney@envoc.com';
+    login.email = 'your@email.com';
     login.password = '';
 
     function onSubmit(){

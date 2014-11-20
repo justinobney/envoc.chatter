@@ -30,7 +30,7 @@
   function HomeCtrl(channelService, fbutil) {
     var home = this;
 
-    home.channels = fbutil.syncObject('channels')
+    home.channels = fbutil.syncObject('channels');
     home.addChannel = addChannel;
 
     function addChannel(){

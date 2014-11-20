@@ -5,7 +5,7 @@
   <div flex>
     <ul>
       <li ng-repeat="message in channel.messages" ng-if="!message.default">
-        {{message.user.name}}&lt;{{message.timestamp|parseDate|date:'hh:MM a'}}&gt; - {{message.text}}
+        {{message.user.name}}&lt;{{message.timestamp|parseDate|date:'hh:mm a'}}&gt; - {{message.text}}
       </li>
     </ul>
   </div>
