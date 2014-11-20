@@ -1,7 +1,9 @@
 {
   "globals": {
     "angular": false,
-    "Firebase": false
+    "_": false,
+    "Firebase": false,
+    "Notification": false
   },
   "node": true,
   "browser": true,

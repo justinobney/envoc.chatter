@@ -3,6 +3,20 @@
   background: $teal;
 }
 
+mentio-menu {
+  bottom: 35px;
+  top: initial !important;
+  background: $white;
+}
+
+mentio-menu .active {
+  background: $silver;
+}
+
+.online-indicator {
+ color: $green;
+}
+
 #main-nav > header {
   @include main-header($blue);
 }

@@ -48,7 +48,8 @@
       'common.interceptors.http',
       'common.firebase',
       'common.services',
-      'templates'
+      'templates',
+      'mentio'
     ])
     .config(config)
     .run(run)

@@ -26,6 +26,7 @@
   <script type="text/javascript" src="src/vendor/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="src/vendor/firebase/firebase-debug.js"></script>
   <script type="text/javascript" src="src/vendor/angularfire/dist/angularfire.min.js"></script>
+  <script type="text/javascript" src="src/vendor/ment.io/dist/mentio.min.js"></script>
   <script type="text/javascript" src="src/vendor/lodash/dist/lodash.js"></script>
   <!-- endbuild -->
 
@@ -50,6 +51,14 @@
 
   <script type="text/javascript" src="tmp/templates.js"></script>
   <!-- endbuild -->
+
+  <script type="text/ng-template" id="/people-mentions.tpl">
+  <ul>
+    <li mentio-menu-item="person" ng-repeat="person in items">
+      <span ng-if="person.online" class="online-indicator">•</span>{{person.name}}
+    </li>
+  </ul>
+  </script>
 </body>
 
 </html>
