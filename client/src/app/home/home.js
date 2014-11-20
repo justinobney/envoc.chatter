@@ -42,8 +42,8 @@
         }
 
         function bindPresence(){
-          var presence = fbutil.ref(['profiles', session.uid, 'online'])
-          connected.on("value", function(isOnline) {
+          var presence = fbutil.ref(['profiles', session.uid, 'online']);
+          connected.on('value', function(isOnline) {
             presence.set(isOnline.val());
           });
 
