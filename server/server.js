@@ -19,6 +19,7 @@ function makeListener(channelName) {
 
     messageChannel.once("value", function(snapshot) {
         messageChannel.initialized = true;
+        console.log('initialized');
     });
 
     messageChannel.on("child_added", function(snapshot) {
