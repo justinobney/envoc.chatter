@@ -1,4 +1,5 @@
 var Firebase = require("firebase");
+var responses = require('./responses');
 
 var refs = {};
 var url = 'https://envoc-chatterbox.firebaseio.com/';
@@ -9,13 +10,25 @@ refs._messages = root.child('messages')
 
 refs._channels.on("child_added", function(snapshot) {
     var channel = snapshot.val();
-    makeListener(channel.name);
+    try {
+      makeListener(channel.name);
+    } catch(e){
+      console.log(e);
+    }
+});
+
+// Get the data on a post that has been removed
+refs._channels.on("child_removed", function(snapshot) {
+    var channel = snapshot.val();
+    try {
+      removeListener(channel.name);
+    } catch(e){
+      console.log(e);
+    }
 });
 
 function makeListener(channelName) {
-    var messageChannel = refs
-        ._messages
-        .child(channelName);
+    var messageChannel = refs._messages.child(channelName);
 
     messageChannel.once("value", function(snapshot) {
         messageChannel.initialized = true;
@@ -27,19 +40,37 @@ function makeListener(channelName) {
             return;
 
         var message = snapshot.val();
-        if (!isChatterbot(message) && message.text.indexOf('hello') > -1) {
-            messageChannel.push({
-                text: 'hello, how are  you',
+
+        Object.keys(responses).forEach(function(key, value) {
+            var match = new RegExp(key, 'gi');
+            if (!isChatterbot(message) && match.test(message.text)) {
+                chatBack(key);
+            }
+        })
+
+
+        function isChatterbot(msg) {
+            return msg.user.name == 'chatterbot';
+        }
+
+        function chatBack(key) {
+            var msg = {
                 timestamp: Firebase.ServerValue.TIMESTAMP,
                 user: {
                     email: 'chatter@envoc.com',
                     name: 'chatterbot'
                 }
-            });
-        }
+            }
 
-        function isChatterbot(msg){
-          return msg.user.name == 'chatterbot';
+            msg.text = responses[key];
+            setTimeout(function(msg) {
+                messageChannel.push(msg)
+            }, 500, msg);
         }
     });
+}
+
+function removeListener(channelName) {
+    var messageChannel = refs._messages.child(channelName);
+    messageChannel.off("child_added");
 }
