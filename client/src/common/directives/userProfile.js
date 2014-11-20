@@ -4,8 +4,10 @@
   function userProfile(auth, session) {
     return {
       restrict: 'E',
-      template: '<span>{{session.user.name}}</span>' +
-                '<br><button type="button" ng-click="logOut()">Log Out</button>',
+      template: '<div class="user-profile">'+
+                  '<span><a ui-sref="root.home.preferences">{{session.user.name}}</a></span>' +
+                  '<br><button type="button" ng-click="logOut()">Log Out</button>' +
+                '</div>',
       /*jshint unused:false*/
       link: function(scope, elm, attrs) {
         scope.session = session;

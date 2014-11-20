@@ -17,6 +17,10 @@ mentio-menu .active {
  color: $green;
 }
 
+.user-profile a {
+  color: $white;
+}
+
 #main-nav > header {
   @include main-header($blue);
 }

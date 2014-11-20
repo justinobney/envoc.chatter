@@ -28,7 +28,7 @@
     $scope.bind = {};
 
     prefs.session = session;
-    session.prefs.$bindTo($scope, "bind");
+    session.prefs.$bindTo($scope, 'bind');
   }
 
   angular.module('home.preferences', [])
