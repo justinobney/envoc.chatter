@@ -25,7 +25,7 @@
   function SignupCtrl($state, userService) {
     var signup = this;
 
-    signup.name = ;
+    signup.name = '';
     signup.email = '';
     signup.password = '';
     signup.submit = onSubmit;

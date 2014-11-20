@@ -11,7 +11,7 @@
 
     function addChannel(name) {
       channels.child(name).set({name: name});
-      messages.child(name).push({message: 'welcome', default: true});
+      messages.child(name).push({text: 'welcome', default: true});
     }
   }
 

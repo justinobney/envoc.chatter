@@ -53,7 +53,12 @@
           .child('profiles')
           .child(auth.uid);
 
-        ref.set(profileData, onProfileCreated);
+        var profile = {
+          name: profileData.name,
+          email: profileData.email
+        };
+
+        ref.set(profile, onProfileCreated);
 
         return dfd.promise;
 

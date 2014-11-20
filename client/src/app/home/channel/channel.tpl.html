@@ -2,10 +2,15 @@
   <header>
     <h1>{{channel.name}}</h1>
   </header>
-  <div flex>
+  <div flex class="scroll-vertical">
     <ul>
-      <li ng-repeat="message in channel.messages" ng-if="!message.default">
-        {{message.user.name}}&lt;{{message.timestamp|parseDate|date:'hh:mm a'}}&gt; - {{message.text}}
+      <li ng-repeat="message in channel.messages">
+        <span ng-if="message.default">
+          <em><small>{{message.text}}</small></em>
+        </span>
+        <span ng-if="!message.default">
+          {{message.user.name}}&lt;{{message.timestamp|parseDate|date:'hh:mm a'}}&gt; - {{message.text}}
+        </span>
       </li>
     </ul>
   </div>
