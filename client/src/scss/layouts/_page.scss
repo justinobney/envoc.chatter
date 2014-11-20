@@ -3,10 +3,10 @@
   background: $teal;
 }
 
-#main-nav header {
+#main-nav > header {
   @include main-header($blue);
 }
 
-#messages header {
+#messages > header {
   @include main-header($gray);
 }

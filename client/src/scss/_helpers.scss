@@ -1,3 +1,14 @@
+.pad-10 {
+  padding: 10px;
+  border-top: solid 1px $black;
+  @include border-box();
+}
+
+.form-control {
+  width: 100%;
+  display:block;
+}
+
 %center {
   margin-right: auto;
   margin-left: auto;

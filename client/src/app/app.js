@@ -6,8 +6,8 @@
   });
 
   function config($stateProvider, $urlRouterProvider, $logProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/messages');
-    $logProvider.debugEnabled(true);
+    $urlRouterProvider.otherwise('/messages/boom-boom');
+    // $logProvider.debugEnabled(true);
     $httpProvider.interceptors.push('httpInterceptor');
     $stateProvider
       .state('root', {
@@ -40,10 +40,11 @@
       'firebase',
       'login',
       'home',
-      'home.messages',
+      'home.channel',
       'common.directives.version',
       'common.directives.userProfile',
       'common.filters.uppercase',
+      'common.filters.parseDate',
       'common.interceptors.http',
       'common.firebase',
       'common.services',

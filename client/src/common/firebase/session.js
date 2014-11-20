@@ -1,17 +1,16 @@
 (function() {
   'use strict';
 
-  function session($state, auth) {
+  function session($state, auth, fbutil) {
     var session = {}
     auth.$onAuth(onAuth);
     return session;
 
     function onAuth(authObj){
       if(authObj){
-        session.user = {
-          email: authObj.password.email
-        };
+        session.user = fbutil.syncObject(['profiles', authObj.uid]);
       } else {
+        session.user.$destroy && session.user.$destroy();
         session.user = null;
         $state.transitionTo('login');
       }

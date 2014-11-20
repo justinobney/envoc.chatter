@@ -41,7 +41,7 @@
 
     function fbAuthCallback(authData){
       if(authData){
-        $state.transitionTo('root.home.messages');
+        $state.transitionTo('root.home.channel', {channel:'general'});
       }
     }
   }

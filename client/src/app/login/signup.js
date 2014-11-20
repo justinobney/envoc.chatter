@@ -43,7 +43,7 @@
         .then(onCreated);
 
       function onCreated(){
-        $state.transitionTo('root.home.messages');
+        $state.transitionTo('root.home.channel', {channel:'general'});
       }
     }
 

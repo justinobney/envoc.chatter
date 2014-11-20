@@ -1,0 +1,18 @@
+<section id="messages" layout-fill layout="vertical">
+  <header>
+    <h1>{{channel.name}}</h1>
+  </header>
+  <div flex>
+    <ul>
+      <li ng-repeat="message in channel.messages" ng-if="!message.default">
+        {{message.user.name}}&lt;{{message.timestamp|parseDate|date:'hh:MM a'}}&gt; - {{message.text}}
+      </li>
+    </ul>
+  </div>
+  <div class="pad-10">
+    <form ng-submit="channel.addMessage()">
+      <input type="text" class="form-control"
+        ng-model="channel.newMessage" placeholder="new message">
+    </form>
+  </div>
+</section>
