@@ -9,6 +9,7 @@
     function onAuth(authObj){
       if(authObj){
         sessionData.user = fbutil.syncObject(['profiles', authObj.uid]);
+        sessionData.prefs = fbutil.syncObject(['preferences', authObj.uid]);
         sessionData.uid = authObj.uid;
       } else {
         try {

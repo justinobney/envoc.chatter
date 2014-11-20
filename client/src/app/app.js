@@ -41,6 +41,7 @@
       'login',
       'home',
       'home.channel',
+      'home.preferences',
       'common.directives.version',
       'common.directives.userProfile',
       'common.filters.uppercase',
