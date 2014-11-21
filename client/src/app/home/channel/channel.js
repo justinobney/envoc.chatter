@@ -96,10 +96,11 @@
     }
 
     function notifications() {
+      msgRef.on('child_added', checkMentions);
       msgRef.once('value', function() {
+        console.log('initialized');
         msgRef.initialized = true;
       });
-      msgRef.on('child_added', checkMentions);
 
       if (Notification.permission !== 'granted') {
         Notification.requestPermission();

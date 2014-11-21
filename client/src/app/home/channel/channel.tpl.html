@@ -6,7 +6,9 @@
     <ul>
       <li ng-repeat="message in channel.messages">
         <span ng-if="message.default">
-          <em><small>{{message.text}}</small></em>
+          <em>
+            <small ng-bind-html="message.text | highlighWords"></small>
+          </em>
         </span>
         <span ng-if="!message.default">
           <img ng-src="{{message.user.email | gravatarHash}}"
