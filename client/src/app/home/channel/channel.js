@@ -44,7 +44,8 @@
     }
 
     function setChannelActive(){
-      session.channels.$loaded().then(function(){
+      session.channels.$loaded().then(function(data){
+        console.log(name);
         session.channels[name] = true;
         session.channels.$save();
       });
