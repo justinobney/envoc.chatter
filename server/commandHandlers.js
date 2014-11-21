@@ -1,3 +1,4 @@
+var _ = require("lodash");
 var Firebase = require("firebase");
 var responses = require('./responses');
 var config = require('./config');
@@ -7,10 +8,12 @@ var root = new Firebase(config.firebase_url);
 
 var commandMap = {
   'ask': askHandler,
-  'close': closeHandler
+  'close': closeHandler,
+  'kick': kickHandler
 };
 
 refs._messages = root.child('messages');
+refs._profiles = root.child('profiles');
 refs._commands = root.child('commands');
 
 module.exports.init = function() {
@@ -25,7 +28,7 @@ module.exports.init = function() {
     }
 
     var commandMeta = snapshot.val();
-    console.log(commandMeta);
+    // console.log(commandMeta);
     var handler = commandMap[commandMeta.command.name];
 
     if(handler){
@@ -47,8 +50,6 @@ function askHandler(commandMeta){
 }
 
 function closeHandler(commandMeta){
-  var path = ['preferences', commandMeta.uid, 'channels', commandMeta.channel].join('/');
-  var userPrefs = root.child(path)
   var targetChannel = refs._messages.child(commandMeta.channel);
   var username = commandMeta.user.name;
   var msg = {
@@ -57,5 +58,27 @@ function closeHandler(commandMeta){
   };
 
   targetChannel.push(msg)
+  removeFromChannel(commandMeta.uid, commandMeta.channel);
+}
+
+function kickHandler(commandMeta){
+  var mentions = commandMeta.command.mentions
+
+  refs._profiles.on('value', function(snapshot){
+    var people = snapshot.val();
+
+    _.forEach(people, function(person, uid){
+      var match = _.contains(mentions, '@' + person.name)
+      if(match){
+        removeFromChannel(uid, commandMeta.channel);
+      }
+    });
+  });
+}
+
+function removeFromChannel(uid, channel){
+  console.log('kicking: ', uid, ' from: ', channel);
+  var path = ['preferences', uid, 'channels', channel].join('/');
+  var userPrefs = root.child(path)
   userPrefs.remove();
 }
