@@ -24,23 +24,26 @@
     $log.debug('MainCtrl laoded!');
   }
 
-  function run($log, $rootScope, $state, hotkeys) {
+  function run($log, $rootScope, $state, hotkeys, ngDialog) {
     $rootScope.$on('$stateChangeError', onRouteError);
     $log.debug('App is running!');
     bindKeys();
 
-    function onRouteError(event, toState, toParams, fromState, fromParams, error){
-      if(error === 'AUTH_REQUIRED'){
+    function onRouteError(event, toState, toParams, fromState, fromParams, error) {
+      if (error === 'AUTH_REQUIRED') {
         $state.transitionTo('login');
       }
     }
 
-    function bindKeys(){
+    function bindKeys() {
       hotkeys.add({
         combo: 'mod+k',
         description: 'Open channel switcher',
         callback: function() {
-          alert('Open channel switcher');
+          ngDialog.open({
+            template: 'channel-switcher',
+            className: 'ngdialog-theme-default'
+          });
         }
       });
     }
@@ -64,7 +67,8 @@
       'common.services',
       'templates',
       'mentio',
-      'cfp.hotkeys'
+      'cfp.hotkeys',
+      'ngDialog'
     ])
     .config(config)
     .run(run)
