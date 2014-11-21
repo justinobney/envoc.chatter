@@ -28,6 +28,7 @@
   <script type="text/javascript" src="src/vendor/angularfire/dist/angularfire.min.js"></script>
   <script type="text/javascript" src="src/vendor/ment.io/dist/mentio.min.js"></script>
   <script type="text/javascript" src="src/vendor/lodash/dist/lodash.js"></script>
+  <script type="text/javascript" src="src/non_bower/md5.min.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->
@@ -56,7 +57,7 @@
   <script type="text/ng-template" id="/people-mentions.tpl">
   <ul>
     <li mentio-menu-item="person" ng-repeat="person in items">
-      <span ng-if="person.online" class="online-indicator">•</span>{{person.name}}
+      <span ng-if="person.online" class="online-indicator">(•online)</span>{{person.name}}
     </li>
   </ul>
   </script>

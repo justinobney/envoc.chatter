@@ -46,6 +46,8 @@
       'common.directives.userProfile',
       'common.filters.uppercase',
       'common.filters.parseDate',
+      'common.filters.highlighWords',
+      'common.filters.gravatarHash',
       'common.interceptors.http',
       'common.firebase',
       'common.services',

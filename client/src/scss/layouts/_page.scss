@@ -21,6 +21,10 @@ mentio-menu .active {
   color: $white;
 }
 
+.highlight {
+  background: $yellow;
+}
+
 #main-nav > header {
   @include main-header($blue);
 }

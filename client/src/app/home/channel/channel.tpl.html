@@ -9,7 +9,13 @@
           <em><small>{{message.text}}</small></em>
         </span>
         <span ng-if="!message.default">
-          {{message.user.name}}&lt;{{message.timestamp|parseDate|date:'hh:mm a'}}&gt; - {{message.text}}
+          <img ng-src="{{message.user.email | gravatarHash}}"
+            alt="{{message.user.name}}"
+            height="32px" width="32px">
+          <span class="username">{{message.user.name}}</span>
+          <span class="timestamp">&lt;{{message.timestamp|parseDate|date:'hh:mm a'}}&gt;</span>
+           -
+          <span class="message" ng-bind-html="message.text | highlighWords"></span>
         </span>
       </li>
     </ul>
