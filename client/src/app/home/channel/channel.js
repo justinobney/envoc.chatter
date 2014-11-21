@@ -32,7 +32,8 @@
     channel.prompt = [];
     channel.messages = fbutil.syncArray(ref);
     channel.people = fbutil.syncArray('profiles');
-    channel.addMessage = addMessage;
+    channel.commands = fbutil.syncArray('commands');
+    channel.addMessage = handleNewMessage;
 
     init();
 
@@ -41,7 +42,36 @@
       buildPersonAutoComplete();
     }
 
-    function addMessage() {
+    function handleNewMessage() {
+      var isCommand = channel.newMessage[0] === '/';
+
+      if(isCommand){
+        channel.commands.$add({
+          channel: channel.name,
+          user: session.user,
+          command: parseCommand(channel.newMessage)
+        });
+      } else {
+        addUserMessage();
+      }
+
+      channel.newMessage = '';
+    }
+
+    function parseCommand(input){
+      var mentionsRegex = /@(\w+)/gi;
+      var mentions = input.match(mentionsRegex);
+      var pieces = input.split(' ');
+      var command = pieces.shift().substring(1);
+      var args = pieces.join(' ');
+      return {
+        command: command,
+        arguments: args,
+        mentions: mentions
+      };
+    }
+
+    function addUserMessage(){
       var msg = {
         text: channel.newMessage,
         user: session.user,
@@ -49,7 +79,6 @@
       };
 
       channel.messages.$add(msg);
-      channel.newMessage = '';
     }
 
     function checkMentions(snapshot) {
