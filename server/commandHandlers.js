@@ -17,24 +17,27 @@ refs._profiles = root.child('profiles');
 refs._commands = root.child('commands');
 
 module.exports.init = function() {
-  refs._commands.once("value", function(snapshot) {
+  refs._commands.once("value", getIntialCommands);
+
+  refs._commands.on("child_added", handleNewCommand);
+
+  function getIntialCommands(snapshot) {
     refs._commands.initialized = true;
     console.log('initialized command listener');
-  });
+  }
 
-  refs._commands.on("child_added", function(snapshot) {
+  function handleNewCommand(snapshot) {
     if (!refs._commands.initialized == true) {
       return;
     }
 
     var commandMeta = snapshot.val();
-    // console.log(commandMeta);
     var handler = commandMap[commandMeta.command.name];
 
     if(handler){
       handler(commandMeta);
     }
-  });
+  }
 }
 
 function askHandler(commandMeta){
