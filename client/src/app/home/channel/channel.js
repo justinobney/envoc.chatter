@@ -40,6 +40,14 @@
     function init(){
       notifications();
       buildPersonAutoComplete();
+      setChannelActive();
+    }
+
+    function setChannelActive(){
+      session.channels.$loaded().then(function(){
+        session.channels[name] = true;
+        session.channels.$save();
+      });
     }
 
     function handleNewMessage() {
@@ -49,6 +57,7 @@
         channel.commands.$add({
           channel: channel.name,
           user: session.user,
+          uid: session.uid,
           command: parseCommand(channel.newMessage)
         });
       } else {
@@ -62,10 +71,10 @@
       var mentionsRegex = /@(\w+)/gi;
       var mentions = input.match(mentionsRegex);
       var pieces = input.split(' ');
-      var command = pieces.shift().substring(1);
+      var commandName = pieces.shift().substring(1);
       var args = pieces.join(' ');
       return {
-        command: command,
+        name: commandName,
         arguments: args,
         mentions: mentions
       };

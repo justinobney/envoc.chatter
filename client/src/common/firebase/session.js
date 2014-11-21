@@ -10,6 +10,7 @@
       if(authObj){
         sessionData.user = fbutil.syncObject(['profiles', authObj.uid]);
         sessionData.prefs = fbutil.syncObject(['preferences', authObj.uid]);
+        sessionData.channels = fbutil.syncObject(['preferences', authObj.uid, 'channels']);
         sessionData.uid = authObj.uid;
       } else {
         try {
