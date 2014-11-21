@@ -24,14 +24,25 @@
     $log.debug('MainCtrl laoded!');
   }
 
-  function run($log, $rootScope, $state) {
+  function run($log, $rootScope, $state, hotkeys) {
     $rootScope.$on('$stateChangeError', onRouteError);
     $log.debug('App is running!');
+    bindKeys();
 
     function onRouteError(event, toState, toParams, fromState, fromParams, error){
       if(error === 'AUTH_REQUIRED'){
         $state.transitionTo('login');
       }
+    }
+
+    function bindKeys(){
+      hotkeys.add({
+        combo: 'mod+k',
+        description: 'Open channel switcher',
+        callback: function() {
+          alert('Open channel switcher');
+        }
+      });
     }
   }
 
@@ -52,7 +63,8 @@
       'common.firebase',
       'common.services',
       'templates',
-      'mentio'
+      'mentio',
+      'cfp.hotkeys'
     ])
     .config(config)
     .run(run)
