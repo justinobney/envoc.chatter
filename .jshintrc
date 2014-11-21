@@ -1,7 +1,8 @@
 {
   "globals": {
-    "angular": false,
     "_": false,
+    "angular": false,
+    "md5": false,
     "Firebase": false,
     "Notification": false
   },
