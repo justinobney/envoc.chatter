@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 (function(angular, undefined){
     'use strict';
 
@@ -84,3 +85,4 @@
         };
     }]);
 }(angular));
+/* jshint ignore:end */
