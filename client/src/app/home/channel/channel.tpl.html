@@ -2,7 +2,7 @@
   <header>
     <h1>{{channel.name}}</h1>
   </header>
-  <div flex class="scroll-vertical">
+  <div flex class="scroll-vertical" scroll-glue>
     <ul>
       <li ng-repeat="message in channel.messages">
         <span ng-if="message.default">

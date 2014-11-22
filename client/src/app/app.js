@@ -85,7 +85,8 @@
       'templates',
       'mentio',
       'cfp.hotkeys',
-      'ngDialog'
+      'ngDialog',
+      'luegg.directives'
     ])
     .config(config)
     .run(run)
