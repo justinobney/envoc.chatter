@@ -119,6 +119,8 @@
     }
 
     function updateLastMessage(){
+      if(!channel.thisChannel){ return; }
+
       channel.thisChannel.lastMsg = Firebase.ServerValue.TIMESTAMP;
       session.channels.$save(channel.thisChannel);
       console.log('updateLastMessage', channel.thisChannel);
