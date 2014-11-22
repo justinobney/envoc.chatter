@@ -17,7 +17,9 @@
   function activeChannel(session, fbutil) {
     return function(input) {
       return _.where(input, function(value, key){
-        return key[0] !== '$' && session.channels[key];
+        var validKey = key[0] !== '$';
+        var found = _.find(session.channels, {$value: key});
+        return  validKey && found;
       });
     };
   }
@@ -32,7 +34,9 @@
   function inactiveChannelCount(session, fbutil) {
     return function(input) {
       return _.where(input, function(value, key){
-        return key[0] !== '$' && !session.channels[key];
+        var validKey = key[0] !== '$';
+        var found = _.find(session.channels, {$value: key});
+        return  validKey && !found;
       }).length;
     };
   }

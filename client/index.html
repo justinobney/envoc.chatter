@@ -69,6 +69,14 @@
   </ul>
   </script>
 
+  <script type="text/ng-template" id="/command-suggest.tpl">
+  <ul>
+    <li mentio-menu-item="command" ng-repeat="command in items">
+      <pre>{{command.action}}</pre> {{command.description}}
+    </li>
+  </ul>
+  </script>
+
   <script type="text/ng-template" id="channel-switcher">
   <h1>Select a channel</h1>
   <p>Content goes here</p>

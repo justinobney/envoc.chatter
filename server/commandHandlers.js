@@ -81,7 +81,14 @@ function kickHandler(commandMeta){
 
 function removeFromChannel(uid, channel){
   console.log('kicking: ', uid, ' from: ', channel);
-  var path = ['preferences', uid, 'channels', channel].join('/');
+  var path = ['preferences', uid, 'channels'].join('/');
   var userPrefs = root.child(path)
-  userPrefs.remove();
+  userPrefs.once('value', function(snapshot){
+    var channels = snapshot.val();
+    var key = _.invert(channels)[channel]
+
+    if(key){
+      userPrefs.child(key).remove();
+    }
+  })
 }

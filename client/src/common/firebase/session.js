@@ -19,18 +19,21 @@
 
         sessionData.user = fbutil.syncObject(profilePath);
         sessionData.prefs = fbutil.syncObject(prefPath);
-        sessionData.channels = fbutil.syncObject(channelPath);
-        sessionData.channelList = fbutil.syncArray(channelPath);
+        sessionData.channels = fbutil.syncArray(channelPath);
 
         var channelRef = fbutil.ref(channelPath);
+
+        channelRef.on('value', function onDataInit(){
+          channelRef.initialized = true;
+          console.log('initialized');
+        });
+
         channelRef.on('child_removed', function onChannelLeave(snapshot){
-          if(sessionData.channelList.length){
-            // TODO: i dont fully understand why I have to so this
-            $timeout(function(){
-              var nextChannel = sessionData.channelList[0].$id;
-              $state.transitionTo('root.home.channel', {channel: nextChannel});
-            }, 100);
+          if(channelRef.initialized !== true){
+            return;
           }
+
+          $state.transitionTo('root.home.channel', {channel: 'general'});
         });
 
         sessionData.uid = authObj.uid;

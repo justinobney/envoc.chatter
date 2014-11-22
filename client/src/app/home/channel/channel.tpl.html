@@ -24,7 +24,7 @@
   </div>
   <div class="pad-10">
     <form ng-submit="channel.addMessage()">
-      <input type="text" class="form-control"
+      <input type="text" class="form-control" mentio-id="'channelMessage'"
         mentio mentio-typed-text="typedTerm"
         mentio-items="channel.prompt | filter:typedTerm"
         mentio-template-url="/people-mentions.tpl"

@@ -35,6 +35,12 @@
     channel.commands = fbutil.syncArray('commands');
     channel.addMessage = handleNewMessage;
 
+    channel.commandOptions = [
+      {
+        label: 'ask', action: 'ask', description: 'ask a question'
+      }
+    ];
+
     init();
 
     function init(){
@@ -45,9 +51,13 @@
 
     function setChannelActive(){
       session.channels.$loaded().then(function(data){
-        console.log(name);
-        session.channels[name] = true;
-        session.channels.$save();
+
+        var thisChannel = _.find(session.channels, {$value: name});
+
+        if(!thisChannel){
+          session.channels.$add(name);
+        }
+
       });
     }
 
