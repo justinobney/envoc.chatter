@@ -53,20 +53,24 @@
     }
 
     function hasUnread(channel){
+
       var thisChannel = _.find(session.channels, {name: channel.name});
       if(!thisChannel || !channel.timestamp){
+        console.log('not enough data');
         return false;
       }
 
       if(channel.timestamp && !thisChannel.lastMsg){
+        console.log('never been there');
         return true;
       }
 
       var threshhold = 0.5 * 1000;
       var difference = (channel.timestamp - thisChannel.lastMsg);
-      var hasUnread = difference > threshhold;
-      console.log(difference, hasUnread);
-      if(hasUnread){
+      var hasUnreadMessages = difference > threshhold;
+      // console.log(channel.name, hasUnreadMessages, difference);
+      // console.log(new Date(channel.timestamp), new Date(thisChannel.lastMsg));
+      if(hasUnreadMessages){
         return true;
       }
     }

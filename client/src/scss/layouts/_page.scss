@@ -33,6 +33,10 @@ mentio-menu .active {
 #channel-list a {
   color: $text_purple2;
 }
+#channel-list .unread {
+    font-weight: bold;
+    color: #FFF;
+}
 #messages > header {
   @include main-header($white);
 }

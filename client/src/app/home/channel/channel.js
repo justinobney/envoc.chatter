@@ -22,7 +22,7 @@
    * @name  channelCtrl
    * @description Controller
    */
-  function ChannelCtrl($stateParams, $q, fbutil, session) {
+  function ChannelCtrl($scope, $stateParams, $q, fbutil, session) {
     var channel = this;
     var name = $stateParams.channel;
     var ref = ['messages', name].join('/');
@@ -56,6 +56,13 @@
         console.log('listening for messages in: ' + channel.name);
         msgRef.initialized = true;
       });
+
+      $scope.$on('$destroy', cleanup);
+    }
+
+    function cleanup(){
+      msgRef.off();
+      msgRef.off('value');
     }
 
     function setChannelActive(){
@@ -114,6 +121,7 @@
     function updateLastMessage(){
       channel.thisChannel.lastMsg = Firebase.ServerValue.TIMESTAMP;
       session.channels.$save(channel.thisChannel);
+      console.log('updateLastMessage', channel.thisChannel);
     }
 
     function onMessageReceived(snapshot) {

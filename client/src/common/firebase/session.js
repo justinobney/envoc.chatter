@@ -23,9 +23,8 @@
 
         var channelRef = fbutil.ref(channelPath);
 
-        channelRef.on('value', function onDataInit(){
+        channelRef.once('value', function onDataInit(){
           channelRef.initialized = true;
-          console.log('initialized');
         });
 
         channelRef.on('child_removed', function onChannelLeave(snapshot){
