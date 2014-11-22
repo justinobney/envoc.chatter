@@ -19,7 +19,8 @@
 
       words.split(',').forEach(function(word) {
         word = word.trim();
-        text = text.replace(new RegExp(word, 'gi'), '<span class="highlight">' + word + '</span>');
+        var reg = new RegExp('\\b' + word + '\\b', 'gi');
+        text = text.replace(reg, '<span class="highlight">' + word + '</span>');
       });
 
       return $sce.trustAsHtml(text);
