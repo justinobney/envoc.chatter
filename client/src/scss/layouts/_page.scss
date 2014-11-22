@@ -54,6 +54,10 @@ mentio-menu .active {
 }
 .user-message {
   display: block;
+  padding-left: 45px;
+}
+.user-message .meta {
+  margin-left: -42px;
 }
 .user-message .avatar {
   float: left;
