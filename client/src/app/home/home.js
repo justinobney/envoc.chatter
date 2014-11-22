@@ -31,7 +31,7 @@
     var home = this;
     var connected = fbutil.ref('/.info/connected');
 
-    home.channels = fbutil.syncObject('channels');
+    home.channels = fbutil.syncArray('channels');
     home.people = fbutil.syncObject('profiles');
     home.addChannel = addChannel;
     session.user.$loaded().then(bindPresence);
