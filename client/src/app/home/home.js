@@ -34,6 +34,7 @@
     home.channels = fbutil.syncArray('channels');
     home.people = fbutil.syncObject('profiles');
     home.addChannel = addChannel;
+    home.hasUnread = hasUnread;
     session.user.$loaded().then(bindPresence);
 
     function addChannel() {
@@ -49,6 +50,25 @@
       });
 
       presence.onDisconnect().remove();
+    }
+
+    function hasUnread(channel){
+      var thisChannel = _.find(session.channels, {name: channel.name});
+      if(!thisChannel || !channel.timestamp){
+        return false;
+      }
+
+      if(channel.timestamp && !thisChannel.lastMsg){
+        return true;
+      }
+
+      var threshhold = 0.5 * 1000;
+      var difference = (channel.timestamp - thisChannel.lastMsg);
+      var hasUnread = difference > threshhold;
+      console.log(difference, hasUnread);
+      if(hasUnread){
+        return true;
+      }
     }
   }
 

@@ -44,20 +44,30 @@
     init();
 
     function init(){
-      notifications();
+      bindEvents();
+      initNotifications();
       buildPersonAutoComplete();
       setChannelActive();
+    }
+
+    function bindEvents(){
+      msgRef.on('child_added', onMessageReceived);
+      msgRef.once('value', function() {
+        console.log('listening for messages in: ' + channel.name);
+        msgRef.initialized = true;
+      });
     }
 
     function setChannelActive(){
       session.channels.$loaded().then(function(data){
 
-        var thisChannel = _.find(session.channels, {$value: name});
+        channel.thisChannel = _.find(session.channels, {name: name});
 
-        if(!thisChannel){
-          session.channels.$add(name);
+        if(!channel.thisChannel){
+          session.channels.$add({name: name});
         }
 
+        updateLastMessage();
       });
     }
 
@@ -101,12 +111,21 @@
       channel.messages.$add(msg);
     }
 
-    function checkMentions(snapshot) {
-      if (!msgRef.initialized){
-        return;
-      }
+    function updateLastMessage(){
+      channel.thisChannel.lastMsg = Firebase.ServerValue.TIMESTAMP;
+      session.channels.$save(channel.thisChannel);
+    }
+
+    function onMessageReceived(snapshot) {
+      if (!msgRef.initialized){ return; }
 
       var msg = snapshot.val();
+
+      checkMentions(msg);
+      updateLastMessage();
+    }
+
+    function checkMentions(msg) {
       var reg = new RegExp('@' + session.user.name, 'gi');
       if (reg.test(msg.text)) {
         var notification = new Notification('Chatter', {
@@ -115,13 +134,7 @@
       }
     }
 
-    function notifications() {
-      msgRef.on('child_added', checkMentions);
-      msgRef.once('value', function() {
-        console.log('initialized');
-        msgRef.initialized = true;
-      });
-
+    function initNotifications() {
       if (Notification.permission !== 'granted') {
         Notification.requestPermission();
       }

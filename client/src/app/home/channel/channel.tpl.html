@@ -10,13 +10,15 @@
             <small ng-bind-html="message.text | highlighWords"></small>
           </em>
         </span>
-        <span ng-if="!message.default">
-          <img ng-src="{{message.user.email | gravatarHash}}"
-            alt="{{message.user.name}}"
-            height="32px" width="32px">
-          <span class="username">{{message.user.name}}</span>
-          <span class="timestamp">&lt;{{message.timestamp|parseDate|date:'hh:mm a'}}&gt;</span>
-           -
+        <span ng-if="!message.default" class="user-message" ng-id="id{{message.$id}}">
+          <div class="meta">
+            <img class="avatar"
+              ng-src="{{message.user.email | gravatarHash}}"
+              alt="{{message.user.name}}"
+              height="32px" width="32px">
+            <span class="username">{{message.user.name}}</span>
+            <span class="timestamp">{{message.timestamp|parseDate|date:'hh:mm a'}}</span>
+          </div>
           <span class="message" ng-bind-html="message.text | highlighWords"></span>
         </span>
       </li>

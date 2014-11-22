@@ -3,11 +3,12 @@
     <header>
       <user-profile></user-profile>
     </header>
-    <section id="channel-list" flex>
+    <section id="channel-list" flex class="scroll-vertical">
       <h1>Channels</h1>
       <ul>
         <li ng-repeat="channel in home.channels | activeChannel">
-          <a ui-sref="root.home.channel({channel: channel.name})">
+          <a ui-sref="root.home.channel({channel: channel.name})"
+            ng-class="{'unread': home.hasUnread(channel)}">
             #{{channel.name}}
           </a>
         </li>

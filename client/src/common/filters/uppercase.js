@@ -17,7 +17,7 @@
   function activeChannel(session, fbutil) {
     return function(input) {
       return _.where(input, function(channel, idx){
-        var found = _.find(session.channels, {$value: channel.name});
+        var found = _.find(session.channels, {name: channel.name});
         return found;
       });
     };
@@ -33,7 +33,7 @@
   function inactiveChannelCount(session, fbutil) {
     return function(input) {
       return _.where(input, function(channel, idx){
-        var found = _.find(session.channels, {$value: channel.name});
+        var found = _.find(session.channels, {name: channel.name});
         return !found;
       }).length;
     };
@@ -42,7 +42,7 @@
   function inactiveChannel(session, fbutil) {
     return function(input) {
       return _.where(input, function(channel, idx){
-        var found = _.find(session.channels, {$value: channel.name});
+        var found = _.find(session.channels, {name: channel.name});
         return !found;
       });
     };

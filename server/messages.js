@@ -32,24 +32,31 @@ function onChannelRemoved(snapshot) {
   }
 }
 
+function onMessageAdded(message, channelName, messageChannel) {
+  if (!messageChannel.initialized == true)
+    return;
+
+  chatterbot.process(message, messageChannel);
+
+  // update last message
+  var timestampPath = [channelName, 'timestamp'].join('/');
+  var ts = refs._channels.child(timestampPath);
+  ts.set(Firebase.ServerValue.TIMESTAMP);
+  console.log(timestampPath);
+}
+
 function makeListener(channelName) {
   var messageChannel = refs._messages.child(channelName);
 
   messageChannel.once("value", onIntialValue);
-  messageChannel.on("child_added", onMessageAdded);
+
+  messageChannel.on("child_added", function(snapshot){
+    onMessageAdded(snapshot.val(), channelName, messageChannel);
+  });
 
   function onIntialValue(snapshot) {
     messageChannel.initialized = true;
     console.log('initialized channel: ', channelName);
-  }
-
-  function onMessageAdded(snapshot) {
-    if (!messageChannel.initialized == true)
-      return;
-
-    var message = snapshot.val();
-
-    chatterbot.process(message, messageChannel);
   }
 }
 
