@@ -35,6 +35,8 @@
   function run($log, $rootScope, $state, hotkeys, ngDialog) {
     $rootScope.$on('$stateChangeError', onRouteError);
     $log.debug('App is running!');
+    $rootScope.showChannelSwitcher = showChannelSwitcher;
+
     bindKeys();
 
     function onRouteError(event, toState, toParams, fromState, fromParams, error) {
@@ -43,17 +45,21 @@
       }
     }
 
+    function showChannelSwitcher(){
+      ngDialog.open({
+        template: 'channel-switcher',
+        className: 'ngdialog-theme-default',
+        controller: 'ChannelSwitcherCtrl as channelSwitcher',
+        scope: $rootScope.$new()
+      });
+    }
+
     function bindKeys() {
       hotkeys.add({
         combo: 'mod+k',
         description: 'Open channel switcher',
         callback: function() {
-          ngDialog.open({
-            template: 'channel-switcher',
-            className: 'ngdialog-theme-default',
-            controller: 'ChannelSwitcherCtrl as channelSwitcher',
-            scope: $rootScope.$new()
-          });
+          showChannelSwitcher();
           return false;
         }
       });

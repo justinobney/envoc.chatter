@@ -4,6 +4,10 @@
   @include border-box();
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .form-control {
   width: 100%;
   display: block;

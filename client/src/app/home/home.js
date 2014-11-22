@@ -27,7 +27,7 @@
    * @name  HomeCtrl
    * @description Controller
    */
-  function HomeCtrl($state, channelService, fbutil, session) {
+  function HomeCtrl($rootScope, $state, channelService, fbutil, session) {
     var home = this;
     var connected = fbutil.ref('/.info/connected');
 
@@ -35,7 +35,13 @@
     home.people = fbutil.syncObject('profiles');
     home.addChannel = addChannel;
     home.hasUnread = hasUnread;
-    session.user.$loaded().then(bindPresence);
+    home.showChannelList = showChannelList;
+
+    init();
+
+    function init(){
+      session.user.$loaded().then(bindPresence);
+    }
 
     function addChannel() {
       channelService.addChannel(home.channelName);
@@ -73,6 +79,10 @@
       if(hasUnreadMessages){
         return true;
       }
+    }
+
+    function showChannelList(){
+      $rootScope.showChannelSwitcher();
     }
   }
 

@@ -13,7 +13,9 @@
           </a>
         </li>
         <li ng-if="home.channels | inactiveChannelCount">
-          +{{home.channels | inactiveChannelCount}} more
+          <span ng-click="home.showChannelList()" class="clickable">
+            +{{home.channels | inactiveChannelCount}} more
+          </span>
         </li>
       </ul>
       <h1>People</h1>
@@ -29,7 +31,8 @@
       <form ng-submit="home.addChannel()">
         <div class="pad-10">
           <input type="text" ng-model="home.channelName"
-            placeholder="channel" class="form-control">
+            placeholder="add new channel"
+            class="form-control">
         </div>
       </form>
     </footer>
