@@ -62,24 +62,33 @@
   <!-- endbuild -->
 
   <script type="text/ng-template" id="/people-mentions.tpl">
-  <ul>
-    <li mentio-menu-item="person" ng-repeat="person in items">
-      <span ng-if="person.online" class="online-indicator">(•online)</span>{{person.name}}
-    </li>
-  </ul>
-  </script>
-
-  <script type="text/ng-template" id="/command-suggest.tpl">
-  <ul>
-    <li mentio-menu-item="command" ng-repeat="command in items">
-      <pre>{{command.action}}</pre> {{command.description}}
-    </li>
-  </ul>
+    <ul>
+      <li mentio-menu-item="person" ng-repeat="person in items">
+        <span ng-if="person.online" class="online-indicator">(•online)</span>{{person.name}}
+      </li>
+    </ul>
   </script>
 
   <script type="text/ng-template" id="channel-switcher">
-  <h1>Select a channel</h1>
-  <p>Content goes here</p>
+    <span>Select Channel</span>
+    <div class="pad-10">
+      <input type="text" ng-model="channelSwitcher.channelName"
+        placeholder="channel"
+        class="form-control">
+      <hr>
+      <ul>
+        <li ng-repeat="channel in channelSwitcher.channels | activeChannel | filter:channelSwitcher.channelName">
+          <a ui-sref="root.home.channel({channel: channel.name})">
+              #{{channel.name}}
+            </a>
+        </li>
+        <li ng-repeat="channel in channelSwitcher.channels | inactiveChannel | filter:channelSwitcher.channelName">
+          <a ui-sref="root.home.channel({channel: channel.name})">
+              #{{channel.name}}
+            </a>
+        </li>
+      </ul>
+    </div>
   </script>
 </body>
 

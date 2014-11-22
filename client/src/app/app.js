@@ -24,6 +24,14 @@
     $log.debug('MainCtrl laoded!');
   }
 
+  function ChannelSwitcherCtrl($scope, fbutil) {
+    this.channels = fbutil.syncArray('channels');
+
+    $scope.$on('$stateChangeSuccess', function(){
+      $scope.closeThisDialog();
+    });
+  }
+
   function run($log, $rootScope, $state, hotkeys, ngDialog) {
     $rootScope.$on('$stateChangeError', onRouteError);
     $log.debug('App is running!');
@@ -42,8 +50,11 @@
         callback: function() {
           ngDialog.open({
             template: 'channel-switcher',
-            className: 'ngdialog-theme-default'
+            className: 'ngdialog-theme-default',
+            controller: 'ChannelSwitcherCtrl as channelSwitcher',
+            scope: $rootScope.$new()
           });
+          return false;
         }
       });
     }
@@ -73,5 +84,6 @@
     .config(config)
     .run(run)
     .controller('MainCtrl', MainCtrl)
+    .controller('ChannelSwitcherCtrl', ChannelSwitcherCtrl)
     .value('version', '1.0.2');
 })();

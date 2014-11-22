@@ -39,6 +39,16 @@
     };
   }
 
+  function inactiveChannel(session, fbutil) {
+    return function(input) {
+      return _.where(input, function(channel, idx){
+        var found = _.find(session.channels, {$value: channel.name});
+        return !found;
+      });
+    };
+  }
+
   angular.module('common.filters.uppercase')
-    .filter('inactiveChannelCount', inactiveChannelCount);
+    .filter('inactiveChannelCount', inactiveChannelCount)
+    .filter('inactiveChannel', inactiveChannel);
 })();
