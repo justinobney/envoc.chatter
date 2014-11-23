@@ -35,6 +35,7 @@
     home.people = fbutil.syncObject('profiles');
     home.addChannel = addChannel;
     home.hasUnread = hasUnread;
+    home.isActive = isActive;
     home.showChannelList = showChannelList;
 
     init();
@@ -79,6 +80,10 @@
       if(hasUnreadMessages){
         return true;
       }
+    }
+
+    function isActive(name){
+      return session.activeChannel === name;
     }
 
     function showChannelList(){

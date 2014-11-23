@@ -31,9 +31,22 @@ mentio-menu .active {
   padding-top: 5px;
 }
 #channel-list ul {
-  padding: 0 25px;
+  padding: 0;
   list-style: none;
   margin-top: 5px;
+}
+#channel-list li {
+  padding-left:  25px;
+  margin-right: 15px;
+}
+#channel-list .active {
+  background: $green;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#channel-list .active a {
+  color: #fff;
 }
 #channel-list a {
   color: $text_purple2;

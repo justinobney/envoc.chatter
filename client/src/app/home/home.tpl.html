@@ -6,7 +6,8 @@
     <section id="channel-list" flex class="scroll-vertical">
       <h1>Channels</h1>
       <ul>
-        <li ng-repeat="channel in home.channels | activeChannel">
+        <li ng-repeat="channel in home.channels | activeChannel"
+          ng-class="{'active': home.isActive(channel.name)}">
           <a ui-sref="root.home.channel({channel: channel.name})"
             ng-class="{'unread': home.hasUnread(channel)}">
             #{{channel.name}}

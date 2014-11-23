@@ -11,7 +11,7 @@
         url: '/messages/:channel',
         resolve: {
           prefs: function(session){
-            return session.prefs.$loaded()
+            return session.prefs.$loaded();
           }
         },
         views: {
@@ -40,12 +40,6 @@
     channel.commands = fbutil.syncArray('commands');
     channel.addMessage = handleNewMessage;
 
-    channel.commandOptions = [
-      {
-        label: 'ask', action: 'ask', description: 'ask a question'
-      }
-    ];
-
     init();
 
     function init(){
@@ -71,6 +65,7 @@
     }
 
     function setChannelActive(){
+      session.activeChannel = name;
       session.channels.$loaded().then(function(data){
 
         channel.thisChannel = _.find(session.channels, {name: name});
@@ -137,7 +132,9 @@
       var msg = snapshot.val();
 
       checkMentions(msg);
-      updateLastMessage();
+      if(!msg.default){
+        updateLastMessage();
+      }
     }
 
     function checkMentions(msg) {
