@@ -52,5 +52,4 @@
 @mixin main-header($background, $height: $header-height){
   background: $background;
   height: $height;
-  border-bottom: solid 1px $black;
 }

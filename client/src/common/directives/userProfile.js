@@ -6,7 +6,7 @@
       restrict: 'E',
       template: '<div class="user-profile">'+
                   '<span><a ui-sref="root.home.preferences">{{session.user.name}}</a></span>' +
-                  '<br><button type="button" ng-click="logOut()">Log Out</button>' +
+                  '<button class="clickable" type="button" ng-click="logOut()">Log Out</button>' +
                 '</div>',
       /*jshint unused:false*/
       link: function(scope, elm, attrs) {

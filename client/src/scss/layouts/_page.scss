@@ -26,16 +26,21 @@ mentio-menu .active {
   background: $purple2;
   color: $text_purple2;
 }
+#channel-list h1 {
+  padding-left: 5px;
+  padding-top: 5px;
+}
 #channel-list ul {
   padding: 0 25px;
   list-style: none;
+  margin-top: 5px;
 }
 #channel-list a {
   color: $text_purple2;
 }
 #channel-list .unread {
-    font-weight: bold;
-    color: #FFF;
+  font-weight: bold;
+  color: #FFF;
 }
 #messages > header {
   @include main-header($white);
@@ -48,9 +53,9 @@ mentio-menu .active {
   padding: 10px 10px;
 }
 #messages h1 {
-    line-height: 3.4rem;
-    padding-left: 10px;
-    font-size: 1.7rem;
+  line-height: 3.4rem;
+  padding-left: 10px;
+  font-size: 1.7rem;
 }
 .user-message {
   display: block;
@@ -82,4 +87,17 @@ mentio-menu .active {
 }
 .user-message .message {
   display: block;
+}
+.user-profile {
+  font-size: 1.3rem;
+  line-height: 3.7rem;
+  padding-left: 20px;
+}
+.user-profile button {
+  float: right;
+  margin-top: 20px;
+  margin-right: 10px;
+  background: transparent;
+  border: none;
+  color: #8B7F91;
 }
