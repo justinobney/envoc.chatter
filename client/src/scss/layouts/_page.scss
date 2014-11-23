@@ -56,7 +56,6 @@ mentio-menu .active {
 }
 #messages > header {
   @include main-header($white);
-  border-bottom: solid 1px $gray;
 }
 #messages ul {
   list-style: none;
@@ -137,16 +136,16 @@ mentio-menu .active {
 }
 .decision-body {
   display: block;
-  background: #EDEDED;
+  background: $gray;
   border-radius: 5px;
 }
 .channel-decisions {
-  border-left: solid 1px $gray;
-  padding-left: 3px;
-  padding-top: 3px;
+  background: $gray;
+  border-radius: 5px;
 }
 .channel-decisions>header {
-  background: $gray;
   padding: 10px;
-  border-radius: 5px;
+}
+.channel-decisions>section {
+  padding: 10px;
 }

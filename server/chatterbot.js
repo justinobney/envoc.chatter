@@ -15,7 +15,9 @@ module.exports.process = function process(message, messageChannel) {
 };
 
 function skipReaction(msg) {
-  return msg.default || msg.user.name == 'chatterbot';
+  return msg.default ||
+    msg.user.name == 'chatterbot' ||
+    msg.type !== 'message';
 }
 
 function chatBack(key, channel) {
