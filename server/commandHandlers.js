@@ -85,10 +85,10 @@ function removeFromChannel(uid, channel){
   var userPrefs = root.child(path)
   userPrefs.once('value', function(snapshot){
     var channels = snapshot.val();
-    var key = _.invert(channels)[channel]
-
-    if(key){
-      userPrefs.child(key).remove();
-    }
+    _.forEach(channels, function(value, key){
+      if(value.name === channel){
+        userPrefs.child(key).remove();
+      };
+    });
   })
 }
