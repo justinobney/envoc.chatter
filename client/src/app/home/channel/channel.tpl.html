@@ -1,36 +1,63 @@
 <section id="messages" layout-fill layout="vertical" flex>
-  <header>
+  <header class="channel-header">
     <h1>#{{channel.name}}</h1>
+    <span class="decision-notification"
+      ng-if="channel.decisions.length"
+      ng-click="channel.showDecisions = !channel.showDecisions">
+        decisions:
+        <span class="badge">{{channel.decisions.length}}</span>
+    </span>
   </header>
-  <div flex class="scroll-vertical" scroll-glue>
-    <ul>
-      <li ng-repeat="message in channel.messages">
-        <span ng-if="message.default">
-          <em>
-            <small ng-bind-html="message.text | highlighWords"></small>
-          </em>
-        </span>
-        <span ng-if="!message.default" class="user-message" ng-id="id{{message.$id}}">
-          <div class="meta">
-            <img class="avatar"
-              ng-src="{{message.user.email | gravatarHash}}"
-              alt="{{message.user.name}}"
-              height="32px" width="32px">
-            <span class="username">{{message.user.name}}</span>
-            <span class="timestamp">{{message.timestamp|parseDate|date:'hh:mm a'}}</span>
-          </div>
-          <span class="message" ng-bind-html="message.text | highlighWords"></span>
-        </span>
-      </li>
-    </ul>
-  </div>
-  <div class="pad-10">
-    <form ng-submit="channel.addMessage()">
-      <input type="text" class="form-control" mentio-id="'channelMessage'"
-        mentio mentio-typed-text="typedTerm"
-        mentio-items="channel.prompt | filter:typedTerm"
-        mentio-template-url="/people-mentions.tpl"
-        ng-model="channel.newMessage" placeholder="new message">
-    </form>
+  <div layout-fill layout="horizontal" flex>
+    <div layout-fill layout="vertical" flex>
+      <div flex class="scroll-vertical" scroll-glue >
+        <ul>
+          <li ng-repeat="message in channel.messages">
+            <span ng-if="message.default">
+              <em>
+                <small ng-bind-html="message.text | highlighWords"></small>
+              </em>
+            </span>
+            <span ng-if="message.type == 'message'" class="user-message" ng-id="id{{message.$id}}">
+              <div class="meta">
+                <img class="avatar"
+                  ng-src="{{message.user.email | gravatarHash}}"
+                  alt="{{message.user.name}}"
+                  height="32px" width="32px">
+                <span class="username">{{message.user.name}}</span>
+                <span class="timestamp">{{message.timestamp|parseDate|date:'hh:mm a'}}</span>
+              </div>
+              <span class="message" ng-bind-html="message.text | highlighWords"></span>
+            </span>
+            <span ng-if="message.type == 'decision'" class="decision">
+              <span>{{message.text}}</span>
+              <span class="decision-body">
+                <h1>{{message.title}}</h1>
+                <a ng-repeat="member in message.members">{{member}}</a>
+              </span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="pad-10" >
+        <form ng-submit="channel.addMessage()">
+          <input type="text" class="form-control" mentio-id="'channelMessage'"
+            mentio mentio-typed-text="typedTerm"
+            mentio-items="channel.prompt | filter:typedTerm"
+            mentio-template-url="/people-mentions.tpl"
+            ng-model="channel.newMessage" placeholder="new message">
+        </form>
+      </div>
+    </div>
+    <div layout-fill layout="vertical" flex
+      class="channel-decisions"
+      ng-if="channel.showDecisions">
+      <header>Decisions</header>
+      <section>
+        <div ng-repeat="decision in channel.decisions">
+          <pre>{{decision|json}}</pre>
+        </div>
+      </section>
+    </div>
   </div>
 </section>

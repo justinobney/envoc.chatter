@@ -36,7 +36,7 @@ mentio-menu .active {
   margin-top: 5px;
 }
 #channel-list li {
-  padding-left:  25px;
+  padding-left: 25px;
   margin-right: 15px;
 }
 #channel-list .active {
@@ -44,7 +44,6 @@ mentio-menu .active {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-
 #channel-list .active a {
   color: #fff;
 }
@@ -57,6 +56,7 @@ mentio-menu .active {
 }
 #messages > header {
   @include main-header($white);
+  border-bottom: solid 1px $gray;
 }
 #messages ul {
   list-style: none;
@@ -113,4 +113,40 @@ mentio-menu .active {
   background: transparent;
   border: none;
   color: #8B7F91;
+}
+.channel-header {
+  position: relative;
+}
+.channel-header .decision-notification {
+  position: absolute;
+  top: 15px;
+  right: 5px;
+}
+.channel-header .decision-notification a {
+  color: #000;
+  font-size: 1.1rem;
+}
+.badge {
+  background: #4D394B;
+  color: #fff;
+  padding: 0px 5px;
+  border-radius: 5px;
+}
+.decision {
+  display: block;
+}
+.decision-body {
+  display: block;
+  background: #EDEDED;
+  border-radius: 5px;
+}
+.channel-decisions {
+  border-left: solid 1px $gray;
+  padding-left: 3px;
+  padding-top: 3px;
+}
+.channel-decisions>header {
+  background: $gray;
+  padding: 10px;
+  border-radius: 5px;
 }

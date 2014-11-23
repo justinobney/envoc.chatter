@@ -38,6 +38,7 @@
     channel.messages = fbutil.syncArray(ref);
     channel.people = fbutil.syncArray('profiles');
     channel.commands = fbutil.syncArray('commands');
+    channel.decisions = fbutil.syncArray(['decisions', name]);
     channel.addMessage = handleNewMessage;
 
     init();
@@ -100,7 +101,7 @@
       var mentions = input.match(mentionsRegex);
       var pieces = input.split(' ');
       var commandName = pieces.shift().substring(1);
-      var args = pieces.join(' ');
+      var args = pieces.join(' ').replace(mentionsRegex, '').trim();
       return {
         name: commandName,
         arguments: args,
@@ -112,7 +113,8 @@
       var msg = {
         text: channel.newMessage,
         user: session.user,
-        timestamp: Firebase.ServerValue.TIMESTAMP
+        timestamp: Firebase.ServerValue.TIMESTAMP,
+        type:'message'
       };
 
       channel.messages.$add(msg);

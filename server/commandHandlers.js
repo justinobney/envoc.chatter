@@ -45,11 +45,20 @@ function askHandler(commandMeta){
   var username = commandMeta.user.name;
   var mentions = commandMeta.command.mentions.join(', '); //ugh
 
-  var msg = {
-    text: 'following users were mentioned in a command by ' + username + ' ' + mentions,
-    default: true
+    var msg = {
+    text: username + ' started a new decision.',
+    type:"decision",
+    members: commandMeta.command.mentions,
+    title: commandMeta.command.arguments
+
   };
-  targetChannel.push(msg)
+  targetChannel.push(msg);
+
+  root.child('decisions/' + commandMeta.channel)
+    .push({
+      members: commandMeta.command.mentions,
+      title: commandMeta.command.arguments
+    });
 }
 
 function closeHandler(commandMeta){
