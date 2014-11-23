@@ -9,6 +9,11 @@
     $stateProvider
       .state('root.home.channel', {
         url: '/messages/:channel',
+        resolve: {
+          prefs: function(session){
+            return session.prefs.$loaded()
+          }
+        },
         views: {
           '': {
             templateUrl: 'src/app/home/channel/channel.tpl.html',
