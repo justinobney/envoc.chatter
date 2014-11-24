@@ -27,7 +27,10 @@
                 <span class="username">{{message.user.name}}</span>
                 <span class="timestamp">{{message.timestamp|parseDate|date:'hh:mm a'}}</span>
               </div>
-              <span class="message" ng-bind-html="message.text | highlighWords"></span>
+              <span class="message"
+                ng-bind-html="message.text | highlighWords"
+                ng-if="message.text"></span>
+              <img ng-src="{{message.image}}" ng-if="message.image" alt="">
             </span>
             <span ng-if="message.type == 'decision'" class="decision">
               <span>{{message.text}}</span>

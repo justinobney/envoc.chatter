@@ -26,10 +26,18 @@ function chatBack(key, channel) {
     user: {
       email: 'chatter@envoc.com',
       name: 'chatterbot'
-    }
+    },
+    type: 'message',
   }
 
-  msg.text = responses[key];
+  if(responses[key].text){
+    msg.text = responses[key].text;
+  }
+
+  if(responses[key].image){
+    msg.image = responses[key].image;
+  }
+
   setTimeout(function(msg) {
     channel.push(msg)
   }, 500, msg);
