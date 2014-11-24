@@ -1,5 +1,6 @@
 var Firebase = require("firebase");
 var responses = require('./responses');
+var urlregexp = require('urlregexp')
 
 module.exports.process = function process(message, messageChannel) {
   if (skipReaction(message)) {
@@ -12,7 +13,18 @@ module.exports.process = function process(message, messageChannel) {
       chatBack(key, messageChannel);
     }
   })
+
+  checkForUrls(message, messageChannel);
 };
+
+function checkForUrls(message, messageChannel){
+  var matches = message.text.match(urlregexp);
+  if(matches && matches.length){
+    var msg = 'there was a url in there... ' +
+      'I should learn to take screenshots. Its on my todo list';
+    chatBack('', messageChannel, msg);
+  }
+}
 
 function skipReaction(msg) {
   return msg.default ||
@@ -20,22 +32,28 @@ function skipReaction(msg) {
     msg.type !== 'message';
 }
 
-function chatBack(key, channel) {
+function chatBack(key, channel, overrideText) {
   var msg = {
     timestamp: Firebase.ServerValue.TIMESTAMP,
     user: {
-      email: 'chatter@envoc.com',
+      email: 'chatterbot@envoc.com',
       name: 'chatterbot'
     },
     type: 'message',
   }
 
-  if(responses[key].text){
-    msg.text = responses[key].text;
+  if(responses[key]){
+    if(responses[key].text){
+      msg.text = responses[key].text;
+    }
+
+    if(responses[key].image){
+      msg.image = responses[key].image;
+    }
   }
 
-  if(responses[key].image){
-    msg.image = responses[key].image;
+  if(overrideText){
+    msg.text = overrideText;
   }
 
   setTimeout(function(msg) {
