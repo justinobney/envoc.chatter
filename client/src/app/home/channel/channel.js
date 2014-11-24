@@ -10,7 +10,7 @@
       .state('root.home.channel', {
         url: '/messages/:channel',
         resolve: {
-          prefs: function(session){
+          prefs: function(session) {
             return session.prefs.$loaded();
           }
         },
@@ -27,7 +27,7 @@
    * @name  channelCtrl
    * @description Controller
    */
-  function ChannelCtrl($scope, $stateParams, $q, fbutil, session) {
+  function ChannelCtrl($scope, $stateParams, $q, $timeout, fbutil, session) {
     var channel = this;
     var name = $stateParams.channel;
     var ref = ['messages', name].join('/');
@@ -35,22 +35,27 @@
 
     channel.name = name;
     channel.prompt = [];
+
     channel.messages = fbutil.syncArray(ref);
     channel.people = fbutil.syncArray('profiles');
     channel.commands = fbutil.syncArray('commands');
     channel.decisions = fbutil.syncArray(['decisions', name]);
+    channel.channelMeta = fbutil.syncObject(['channels', name]);
+
     channel.addMessage = handleNewMessage;
+    channel.trackTyping = trackTyping;
+    channel.whoIsTyping = whoIsTyping;
 
     init();
 
-    function init(){
+    function init() {
       bindEvents();
       initNotifications();
       buildPersonAutoComplete();
       setChannelActive();
     }
 
-    function bindEvents(){
+    function bindEvents() {
       msgRef.on('child_added', onMessageReceived);
       msgRef.once('value', function() {
         console.log('listening for messages in: ' + channel.name);
@@ -58,21 +63,28 @@
       });
 
       $scope.$on('$destroy', cleanup);
+
+      channel.channelMeta.$bindTo($scope, 'typingTracker');
+      $scope.$watch('typingTracker', function(curr, prev){});
     }
 
-    function cleanup(){
+    function cleanup() {
       msgRef.off();
       msgRef.off('value');
     }
 
-    function setChannelActive(){
+    function setChannelActive() {
       session.activeChannel = name;
-      session.channels.$loaded().then(function(data){
+      session.channels.$loaded().then(function(data) {
 
-        channel.thisChannel = _.find(session.channels, {name: name});
+        channel.thisChannel = _.find(session.channels, {
+          name: name
+        });
 
-        if(!channel.thisChannel){
-          session.channels.$add({name: name});
+        if (!channel.thisChannel) {
+          session.channels.$add({
+            name: name
+          });
         }
 
         updateLastMessage();
@@ -82,7 +94,7 @@
     function handleNewMessage() {
       var isCommand = channel.newMessage[0] === '/';
 
-      if(isCommand){
+      if (isCommand) {
         channel.commands.$add({
           channel: channel.name,
           user: session.user,
@@ -96,7 +108,7 @@
       channel.newMessage = '';
     }
 
-    function parseCommand(input){
+    function parseCommand(input) {
       var mentionsRegex = /@(\w+)/gi;
       var mentions = input.match(mentionsRegex);
       var pieces = input.split(' ');
@@ -109,19 +121,21 @@
       };
     }
 
-    function addUserMessage(){
+    function addUserMessage() {
       var msg = {
         text: channel.newMessage,
         user: session.user,
         timestamp: Firebase.ServerValue.TIMESTAMP,
-        type:'message'
+        type: 'message'
       };
 
       channel.messages.$add(msg);
     }
 
-    function updateLastMessage(){
-      if(!channel.thisChannel){ return; }
+    function updateLastMessage() {
+      if (!channel.thisChannel) {
+        return;
+      }
 
       channel.thisChannel.lastMsg = Firebase.ServerValue.TIMESTAMP;
       session.channels.$save(channel.thisChannel);
@@ -129,12 +143,14 @@
     }
 
     function onMessageReceived(snapshot) {
-      if (!msgRef.initialized){ return; }
+      if (!msgRef.initialized) {
+        return;
+      }
 
       var msg = snapshot.val();
 
       checkMentions(msg);
-      if(!msg.default){
+      if (!msg.default) {
         updateLastMessage();
       }
     }
@@ -154,13 +170,54 @@
       }
     }
 
-    function buildPersonAutoComplete(){
-      channel.people.$loaded().then(function(){
-        var people = _.map(channel.people.slice(), function(person){
+    function buildPersonAutoComplete() {
+      channel.people.$loaded().then(function() {
+        var people = _.map(channel.people.slice(), function(person) {
           person.label = person.name;
           return person;
         });
         angular.copy(people, channel.prompt);
+      });
+    }
+
+    function whoIsTyping() {
+      var typing = channel.channelMeta.typing || [];
+      typing = typing.slice();
+
+      if (!typing) {
+        return '';
+      }
+
+      typing = typing.filter(function(name){
+        return name !== session.user.name;
+      });
+
+      switch (typing.length) {
+        case 0:
+          return '';
+        case 1:
+          return typing[0] + ' is typing...';
+        case 2:
+          return typing.join(' and ') + ' are typing...';
+        default:
+          return typing[0] + ' and ' + typing.length - 1 + ' are typing...';
+      }
+    }
+
+    function trackTyping() {
+      channel.channelMeta.$loaded().then(function() {
+        channel.channelMeta.typing = channel.channelMeta.typing || [];
+        var typing = channel.channelMeta.typing;
+        var username = session.user.name;
+
+        if (typing.indexOf(username) === -1) {
+          typing.push(username);
+          channel.channelMeta.$save();
+          $timeout(function() {
+            channel.channelMeta.typing = _.remove(typing, username);
+            channel.channelMeta.$save();
+          }, 2000);
+        }
       });
     }
   }

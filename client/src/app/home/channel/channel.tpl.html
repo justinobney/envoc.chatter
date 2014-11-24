@@ -42,13 +42,15 @@
           </li>
         </ul>
       </div>
-      <div class="pad-10" >
+      <div class="pad-10">
+        <small>{{channel.whoIsTyping()}}</small>
         <form ng-submit="channel.addMessage()">
           <input type="text" class="form-control" mentio-id="'channelMessage'"
             mentio mentio-typed-text="typedTerm"
             mentio-items="channel.prompt | filter:typedTerm"
             mentio-template-url="/people-mentions.tpl"
-            ng-model="channel.newMessage" placeholder="new message">
+            ng-model="channel.newMessage" placeholder="new message"
+            ng-change="channel.trackTyping()">
         </form>
       </div>
     </div>
