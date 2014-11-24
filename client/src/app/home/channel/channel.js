@@ -213,7 +213,15 @@
         if (typing.indexOf(username) === -1) {
           typing.push(username);
           channel.channelMeta.$save();
-          $timeout(function() {
+          channel.typingPromise = $timeout(function() {
+            channel.channelMeta.typing = _.remove(typing, username);
+            channel.channelMeta.$save();
+          }, 2000);
+        }
+
+        if(channel.typingPromise){
+          $timeout.cancel(channel.typingPromise);
+          channel.typingPromise = $timeout(function() {
             channel.channelMeta.typing = _.remove(typing, username);
             channel.channelMeta.$save();
           }, 2000);
