@@ -28,7 +28,7 @@ function checkForUrls(message, messageChannel){
 
 function skipReaction(msg) {
   return msg.default ||
-    msg.user.name == 'chatterbot' ||
+    (msg.user && msg.user.name == 'chatterbot') ||
     msg.type !== 'message';
 }
 
