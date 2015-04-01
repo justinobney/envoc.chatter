@@ -1,5 +1,7 @@
 # envoc.chatter
 
+[![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/justinobney)
+
 ## a slack like app used to learn firebase
 
 Features
